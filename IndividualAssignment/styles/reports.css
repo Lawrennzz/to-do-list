@@ -1,0 +1,318 @@
+:root {
+    /* Color Palette - Updated to match archive.css */
+    --primary-color: #4a6cf7;  /* Changed from purple to match archive.css */
+    --secondary-color: #2ed573;
+    --background-color: #f8f9fa;
+    --text-color: #2d3436;
+    --card-background: #ffffff;
+    --text-muted: #7f8c8d;
+    --white: #ffffff;
+    
+    /* Priority Colors - Improved contrast */
+    --high-priority-color: #ff6b6b;
+    --medium-priority-color: #ffa502;
+    --low-priority-color: #54a0ff;
+
+    /* Sidebar Colors - Updated to match archive.css */
+    --sidebar-background: #ffffff;
+    --sidebar-text: #2d3436;
+    --sidebar-active-bg: rgba(74, 108, 247, 0.1);
+    --sidebar-hover-bg: rgba(74, 108, 247, 0.05);
+    
+    /* Status Colors - Updated to match database enum values */
+    --pending-status-color: #0984e3;
+    --ongoing-status-color: #fdcb6e;
+    --completed-status-color: #00b894;
+    --cancelled-status-color: #ff6b81;
+    
+    /* Additional Colors */
+    --urgent-color: #ee5253;
+    --overdue-color: #ff4757;
+    --category-color: #5f27cd;
+    --archived-color: #576574;
+    
+    /* Spacing & Sizing */
+    --border-radius: 10px;
+    --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+
+    /* Form Colors */
+    --input-border: #e0e4e8;
+    --input-focus: rgba(74, 108, 247, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Arial', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Mobile Menu Overlay */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.menu-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+.layout-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles - Enhanced with better transitions */
+.sidebar {
+    width: 260px;
+    background-color: var(--card-background);
+    border-right: 1px solid #e0e4e8;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1000;
+    box-shadow: var(--box-shadow);
+}
+
+.sidebar-collapsed {
+    width: 80px;
+    overflow: hidden;
+}
+
+.sidebar-collapsed .menu-text {
+    display: none;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    border-bottom: 1px solid #e0e4e8;
+    position: relative;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    margin-left: 0.75rem;
+    font-weight: 700;
+}
+
+.toggle-sidebar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+}
+
+.toggle-sidebar:hover {
+    color: var(--primary-color);
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 1rem 0;
+}
+
+.menu-item {
+    margin-bottom: 0.25rem;
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+    padding: 0.85rem 1.25rem;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    margin-right: 0.5rem;
+    font-weight: 500;
+}
+
+.menu-link:hover, .menu-link.active {
+    background-color: rgba(74, 108, 247, 0.1);
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.menu-icon {
+    margin-right: 1rem;
+    width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+    border-top: 1px solid #e0e4e8;
+    background-color: #f9f9f9;
+}
+
+/* Main Content Styles - Improved spacing and organization */
+.main-content {
+    flex-grow: 1;
+    margin-left: 260px;
+    padding: 2.5rem;
+    transition: all 0.3s ease;
+    background-color: var(--background-color);
+}
+
+.main-content.expanded {
+    margin-left: 80px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.breadcrumb {
+    display: flex;
+    list-style: none;
+    font-size: 0.95rem;
+    color: #7f8c8d;
+}
+
+.breadcrumb-item {
+    margin-right: 0.5rem;
+}
+
+.breadcrumb-item:not(:last-child)::after {
+    content: '/';
+    margin-left: 0.5rem;
+}
+
+/* Task Statistics */
+
+.task-statistics {
+    margin-bottom: 2rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.stat-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.stat-card h3 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.stat-card p {
+    margin: 0.5rem 0 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.export-section {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.export-options {
+    display: flex;
+    gap: 1rem;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+#tasks-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+#tasks-table th, 
+#tasks-table td {
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+#tasks-table thead {
+    background-color: var(--background-color);
+    font-weight: bold;
+}
+
+.priority-high { color: var(--high-priority-color); font-weight: bold; }
+.priority-medium { color: var(--medium-priority-color); }
+.priority-low { color: var(--low-priority-color); }
+
+.status-completed { color: var(--secondary-color); }
+.status-pending { color: var(--high-priority-color); }
+.status-ongoing { color: var(--medium-priority-color); }
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}

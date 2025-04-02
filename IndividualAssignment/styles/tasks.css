@@ -1,0 +1,517 @@
+:root {
+    /* Color Palette - Updated to match archive.css */
+    --primary-color: #4a6cf7;
+    --secondary-color: #2ed573;
+    --background-color: #f8f9fa;
+    --text-color: #000000;
+    --card-background: #ffffff;
+    --text-muted: #747d8c;
+    --white: #ffffff;
+    
+    /* Priority Colors - Improved contrast */
+    --high-priority-color: #ff6b6b;
+    --medium-priority-color: #ffa502;
+    --low-priority-color: #54a0ff;
+
+    /* Sidebar Colors */
+    --sidebar-background: #ffffff;
+    --sidebar-text: #000000;
+    --sidebar-active-bg: rgba(74, 108, 247, 0.1);
+    --sidebar-hover-bg: rgba(74, 108, 247, 0.05);
+    
+    /* Status Colors */
+    --pending-status-color: #0984e3;
+    --ongoing-status-color: #fdcb6e;
+    --completed-status-color: #00b894;
+    --cancelled-status-color: #ff6b81;
+    
+    /* Additional Colors */
+    --urgent-color: #ee5253;
+    --overdue-color: #ff4757;
+    --category-color: #5f27cd;
+    --archived-color: #576574;
+    
+    /* Spacing & Sizing */
+    --border-radius: 10px;
+    --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+    --transition-speed: 0.3s;
+    --input-border-color: #e0e4e8;
+
+    /* Form Colors */
+    --input-border: #e0e4e8;
+    --input-focus: rgba(74, 108, 247, 0.2);
+    --input-bg: #ffffff;
+    --input-text: #000000;
+    --input-placeholder: #747d8c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Arial', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Mobile Menu Overlay */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.menu-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+.layout-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 260px;
+    background-color: var(--card-background);
+    border-right: 1px solid #e0e4e8;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1000;
+    box-shadow: var(--box-shadow);
+}
+
+.sidebar-collapsed {
+    width: 80px;
+    overflow: hidden;
+}
+
+.sidebar-collapsed .menu-text {
+    display: none;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    border-bottom: 1px solid #e0e4e8;
+    position: relative;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    margin-left: 0.75rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.toggle-sidebar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+}
+
+.toggle-sidebar:hover {
+    color: var(--primary-color);
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 1rem 0;
+}
+
+.menu-item {
+    margin-bottom: 0.25rem;
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+    padding: 0.85rem 1.25rem;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    margin-right: 0.5rem;
+    font-weight: 500;
+}
+
+.menu-link:hover, .menu-link.active {
+    background-color: var(--sidebar-active-bg);
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.menu-icon {
+    margin-right: 1rem;
+    width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+    border-top: 1px solid #e0e4e8;
+    background-color: #f9f9f9;
+}
+
+/* Main Content Styles */
+.main-content {
+    flex-grow: 1;
+    margin-left: 260px;
+    padding: 2.5rem;
+    transition: all 0.3s ease;
+    background-color: var(--background-color);
+}
+
+.main-content.expanded {
+    margin-left: 80px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.page-header h2 {
+    font-size: 2rem;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.breadcrumb {
+    display: flex;
+    list-style: none;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+.breadcrumb-item {
+    margin-right: 0.5rem;
+}
+
+.breadcrumb-item:not(:last-child)::after {
+    content: '/';
+    margin-left: 0.5rem;
+    color: var(--text-muted);
+}
+
+/* Task and Archive Actions */
+.task-actions, .archive-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--black);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    transition: all var(--transition-speed) ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(55, 66, 250, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: #2bfaca;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(55, 66, 250, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(74, 108, 247, 0.15);
+}
+
+.btn-primary i {
+    font-size: 1.1rem;
+    margin-right: 0.5rem;
+}
+
+/* Enhanced animation effect for the button */
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.7s ease;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+/* Add pulse animation for better visibility */
+.btn-primary {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(55, 66, 250, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(55, 66, 250, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(55, 66, 250, 0);
+    }
+}
+
+/* Add hover glow effect */
+.btn-primary:hover {
+    animation: none;
+    box-shadow: 0 0 0 0 rgba(55, 66, 250, 0.4);
+}
+
+.filter-form {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.filter-form select {
+    flex: 1;
+    max-width: 200px;
+    padding: 0.75rem;
+    border: 1px solid var(--input-border-color);
+    border-radius: var(--border-radius);
+    background-color: var(--card-background);
+    color: var(--text-color);
+    transition: all var(--transition-speed) ease;
+}
+
+.filter-form select:hover {
+    border-color: var(--primary-color);
+}
+
+.filter-form select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(55, 66, 250, 0.15);
+    outline: none;
+}
+
+.filter-form button {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.filter-form button:hover {
+    background-color: #2b3dfa;
+    transform: translateY(-2px);
+}
+
+.filter-form button:active {
+    transform: translateY(0);
+}
+
+/* Tasks and Archive List */
+.tasks-list, .archive-list {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead {
+    background-color: #f8f9fa;
+}
+
+table th, table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--input-border);
+}
+
+table th a {
+    text-decoration: none;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 600;
+}
+
+/* Priority and Status Colors */
+.priority-high, .status-pending {
+    color: var(--high-priority-color);
+    font-weight: bold;
+}
+
+.priority-medium, .status-ongoing {
+    color: var(--medium-priority-color);
+    font-weight: bold;
+}
+
+.priority-low, .status-completed {
+    color: var(--low-priority-color);
+    font-weight: bold;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-edit {
+    color: var(--primary-color);
+}
+
+.btn-archive, .btn-restore, .btn-delete {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+}
+
+.btn-archive {
+    color: var(--archived-color);
+}
+
+.btn-restore {
+    color: var(--ongoing-status-color);
+    background-color: rgba(253, 203, 110, 0.1);
+}
+
+.btn-delete {
+    color: var(--high-priority-color);
+    background-color: rgba(255, 107, 107, 0.1);
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.pagination a {
+    margin: 0 0.25rem;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: var(--text-color);
+    border: 1px solid var(--input-border);
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+}
+
+.pagination a.active, .pagination a:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-color: var(--primary-color);
+}
+
+/* No Tasks/Archived Tasks Message */
+.no-tasks, .no-archived-tasks {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-muted);
+}
+
+.no-tasks a, .no-archived-tasks a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 1.5rem;
+    }
+
+    .task-actions, .archive-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .filter-form {
+        flex-direction: column;
+    }
+
+    .sidebar-menu {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .menu-item {
+        flex-basis: calc(33.33% - 10px);
+        margin-bottom: 10px;
+    }
+}

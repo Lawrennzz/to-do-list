@@ -1,0 +1,325 @@
+:root {
+    /* Color Palette - Updated to match archive.css */
+    --primary-color: #4a6cf7;  /* Changed from purple to match archive.css */
+    --secondary-color: #2ed573;
+    --background-color: #f8f9fa;
+    --text-color: #2d3436;
+    --card-background: #ffffff;
+    --text-muted: #7f8c8d;
+    --white: #ffffff;
+    
+    /* Priority Colors - Improved contrast */
+    --high-priority-color: #ff6b6b;
+    --medium-priority-color: #ffa502;
+    --low-priority-color: #54a0ff;
+
+    /* Sidebar Colors - Updated to match archive.css */
+    --sidebar-background: #ffffff;
+    --sidebar-text: #2d3436;
+    --sidebar-active-bg: rgba(74, 108, 247, 0.1);
+    --sidebar-hover-bg: rgba(74, 108, 247, 0.05);
+    
+    /* Status Colors - Updated to match database enum values */
+    --pending-status-color: #0984e3;
+    --ongoing-status-color: #fdcb6e;
+    --completed-status-color: #00b894;
+    --cancelled-status-color: #ff6b81;
+    
+    /* Additional Colors */
+    --urgent-color: #ee5253;
+    --overdue-color: #ff4757;
+    --category-color: #5f27cd;
+    --archived-color: #576574;
+    
+    /* Spacing & Sizing */
+    --border-radius: 10px;
+    --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+
+    /* Form Colors */
+    --input-border: #e0e4e8;
+    --input-focus: rgba(74, 108, 247, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Arial', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Mobile Menu Overlay */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.menu-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+.layout-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles - Enhanced with better transitions */
+.sidebar {
+    width: 260px;
+    background-color: var(--card-background);
+    border-right: 1px solid #e0e4e8;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1000;
+    box-shadow: var(--box-shadow);
+}
+
+.sidebar-collapsed {
+    width: 80px;
+    overflow: hidden;
+}
+
+.sidebar-collapsed .menu-text {
+    display: none;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    border-bottom: 1px solid #e0e4e8;
+    position: relative;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    margin-left: 0.75rem;
+    font-weight: 700;
+}
+
+.toggle-sidebar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+}
+
+.toggle-sidebar:hover {
+    color: var(--primary-color);
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 1rem 0;
+}
+
+.menu-item {
+    margin-bottom: 0.25rem;
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+    padding: 0.85rem 1.25rem;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    margin-right: 0.5rem;
+    font-weight: 500;
+}
+
+.menu-link:hover, .menu-link.active {
+    background-color: rgba(74, 108, 247, 0.1);
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.menu-icon {
+    margin-right: 1rem;
+    width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+    border-top: 1px solid #e0e4e8;
+    background-color: #f9f9f9;
+}
+
+/* Main Content Styles - Improved spacing and organization */
+.main-content {
+    flex-grow: 1;
+    margin-left: 260px;
+    padding: 2.5rem;
+    transition: all 0.3s ease;
+    background-color: var(--background-color);
+}
+
+.main-content.expanded {
+    margin-left: 80px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.breadcrumb {
+    display: flex;
+    list-style: none;
+    font-size: 0.95rem;
+    color: #7f8c8d;
+}
+
+.breadcrumb-item {
+    margin-right: 0.5rem;
+}
+
+.breadcrumb-item:not(:last-child)::after {
+    content: '/';
+    margin-left: 0.5rem;
+}
+
+/* Card Styles */
+.card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--input-border);
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--input-focus);
+}
+
+.required {
+    color: var(--high-priority-color);
+    margin-left: 4px;
+}
+
+/* Button Styles */
+.btn {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #3a5aef;
+}
+
+/* Alerts */
+.alert {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.alert-success {
+    background-color: rgba(0, 184, 148, 0.1);
+    color: #00b894;
+}
+
+.alert-danger {
+    background-color: rgba(255, 107, 107, 0.1);
+    color: #ff6b6b;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 80px;
+    }
+    
+    .main-content {
+        padding: 20px;
+    }
+    
+    .menu-text {
+        display: none;
+    }
+}

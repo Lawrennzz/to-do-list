@@ -1,0 +1,479 @@
+:root {
+    /* Color Palette - Updated to match archive.css */
+    --primary-color: #4a6cf7;  /* Changed from purple to match archive.css */
+    --secondary-color: #2ed573;
+    --background-color: #f8f9fa;
+    --text-color: #2d3436;
+    --card-background: #ffffff;
+    --text-muted: #7f8c8d;
+    --white: #ffffff;
+    
+    /* Priority Colors - Improved contrast */
+    --high-priority-color: #ff6b6b;
+    --medium-priority-color: #ffa502;
+    --low-priority-color: #54a0ff;
+
+    /* Sidebar Colors - Updated to match archive.css */
+    --sidebar-background: #ffffff;
+    --sidebar-text: #2d3436;
+    --sidebar-active-bg: rgba(74, 108, 247, 0.1);
+    --sidebar-hover-bg: rgba(74, 108, 247, 0.05);
+    
+    /* Status Colors - Updated to match database enum values */
+    --pending-status-color: #0984e3;
+    --ongoing-status-color: #fdcb6e;
+    --completed-status-color: #00b894;
+    --cancelled-status-color: #ff6b81;
+    
+    /* Additional Colors */
+    --urgent-color: #ee5253;
+    --overdue-color: #ff4757;
+    --category-color: #5f27cd;
+    --archived-color: #576574;
+    
+    /* Spacing & Sizing */
+    --border-radius: 10px;
+    --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+
+    /* Form Colors */
+    --input-border: #e0e4e8;
+    --input-focus: rgba(74, 108, 247, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Arial', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Mobile Menu Overlay */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.menu-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+.layout-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles - Enhanced with better transitions */
+.sidebar {
+    width: 260px;
+    background-color: var(--card-background);
+    border-right: 1px solid #e0e4e8;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1000;
+    box-shadow: var(--box-shadow);
+}
+
+.sidebar-collapsed {
+    width: 80px;
+    overflow: hidden;
+}
+
+.sidebar-collapsed .menu-text {
+    display: none;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    border-bottom: 1px solid #e0e4e8;
+    position: relative;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    margin-left: 0.75rem;
+    font-weight: 700;
+}
+
+.toggle-sidebar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+}
+
+.toggle-sidebar:hover {
+    color: var(--primary-color);
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 1rem 0;
+}
+
+.menu-item {
+    margin-bottom: 0.25rem;
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+    padding: 0.85rem 1.25rem;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    margin-right: 0.5rem;
+    font-weight: 500;
+}
+
+.menu-link:hover, .menu-link.active {
+    background-color: rgba(74, 108, 247, 0.1);
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.menu-icon {
+    margin-right: 1rem;
+    width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+    border-top: 1px solid #e0e4e8;
+    background-color: #f9f9f9;
+}
+
+/* Main Content Styles - Improved spacing and organization */
+.main-content {
+    flex-grow: 1;
+    margin-left: 260px;
+    padding: 2.5rem;
+    transition: all 0.3s ease;
+    background-color: var(--background-color);
+}
+
+.main-content.expanded {
+    margin-left: 80px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.breadcrumb {
+    display: flex;
+    list-style: none;
+    font-size: 0.95rem;
+    color: #7f8c8d;
+}
+
+.breadcrumb-item {
+    margin-right: 0.5rem;
+}
+
+.breadcrumb-item:not(:last-child)::after {
+    content: '/';
+    margin-left: 0.5rem;
+}
+
+/* Reminder Card Styles */
+.reminder-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--card-background);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: transform 0.3s ease;
+}
+
+.reminder-card:hover {
+    transform: translateY(-2px);
+}
+
+.reminder-content {
+    flex: 1;
+}
+
+.reminder-content h4 {
+    margin: 0 0 0.5rem 0;
+    color: var(--text-color);
+}
+
+.reminder-content p {
+    color: var(--text-muted);
+    margin: 0.25rem 0;
+}
+
+.reminder-actions {
+    display: flex;
+    align-items: center;
+}
+
+/* Button Styles */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: #4059f6;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(74, 108, 247, 0.2);
+}
+
+.btn-danger {
+    background-color: var(--cancelled-status-color);
+    color: var(--white);
+}
+
+.btn-danger:hover {
+    background-color: #ff4a68;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 72, 104, 0.2);
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--input-border);
+    border-radius: var(--border-radius);
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    background-color: var(--card-background);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
+}
+
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+}
+
+/* Add Reminder Form */
+.add-reminder {
+    background-color: var(--card-background);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-top: 2rem;
+}
+
+.add-reminder h4 {
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+.add-reminder .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.add-reminder .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.add-reminder .form-group input,
+.add-reminder .form-group select,
+.add-reminder .form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--input-border);
+    border-radius: var(--border-radius);
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    background-color: var(--card-background);
+}
+
+.add-reminder .form-group input:focus,
+.add-reminder .form-group select:focus,
+.add-reminder .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
+}
+
+/* Notification Settings */
+.notification-settings {
+    background-color: var(--card-background);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 2rem;
+}
+
+.notification-settings h3 {
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+.notification-settings .form-group {
+    margin-bottom: 1.25rem;
+}
+
+.notification-settings label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.notification-settings input[type="checkbox"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid var(--input-border);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.notification-settings input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.notification-settings input[type="checkbox"]:checked:after {
+    content: '';
+    display: block;
+    position: relative;
+    width: 0.75rem;
+    height: 0.75rem;
+    background-color: var(--white);
+    border-radius: 2px;
+    transform: translate(0.25rem, 0.25rem);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .reminder-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .reminder-actions {
+        margin-top: 1rem;
+        width: 100%;
+    }
+    
+    .reminder-actions button {
+        width: 100%;
+    }
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 0.625rem 0.875rem;
+    }
+
+    .btn {
+        padding: 0.625rem 1.25rem;
+    }
+}
+
+/* Notification Badge */
+.notification-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
